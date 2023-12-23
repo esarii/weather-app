@@ -1,0 +1,17 @@
+body {
+  background: linear-gradient(90deg, #5ca09a 0%, #0D9DE3 100%);
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+.box {
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 0px 30px;
+  background-color: beige;
+}
+
+.bg {
+  background-color: #e2e2e2;
+  border-radius: 10px;
+}
