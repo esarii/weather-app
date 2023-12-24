@@ -1,19 +1,19 @@
 import { useContext, useState } from 'react'
 import CityContext from '../contexts/CityContext'
+import WeatherContext from '../contexts/WeatherContext'
 
 function Weather() {
 
     const { location, setLocation, data } = useContext(CityContext);
-
-    // const [temps, setTemps] = useState([]);
     const [selectedCity, setSelectedCity] = useState([]);
+
+    const { weatherData } = useContext(WeatherContext);
+
+    console.log(weatherData);
 
 
     const handleLocationChange = () => {
-        // console.log(data);
         const cityInfo = data.find((city) => city.name.toLocaleLowerCase() === location.toLocaleLowerCase());
-
-        console.log(cityInfo);
         setSelectedCity(cityInfo);
         console.log(selectedCity);
     }
@@ -47,7 +47,7 @@ function Weather() {
                         <div className='row d-flex align-items-center '>
 
                             <div className='col-lg-4 col-sm-4 float-center text-center'>
-                            {/* <img className="img-fluid " src={`https://openweathermap.org/img/wn/${temps.list[0].weather[0].icon.slice(0, 2)}d@4x.png`} alt='current weather icon' /> */}
+                                img
                             </div>
                             <div className="col-lg-4 col-sm-4">
                                 <h1 className='display-1 fw-bold text-center'>°C</h1>

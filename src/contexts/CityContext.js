@@ -22,7 +22,7 @@ export const CityProvider = ({children}) => {
     const values = {
         location,
         setLocation,
-        data
+        data,
       };
 
     return (
