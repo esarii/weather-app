@@ -1,22 +1,13 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios';
+import { useContext, useState } from 'react'
+import CityContext from '../contexts/CityContext'
 
 function Weather() {
 
-    const [location, setLocation] = useState(localStorage.getItem("city") || "Adana");
-    const [data, setData] = useState([]);
+    const { location, setLocation, data } = useContext(CityContext);
+
+    // const [temps, setTemps] = useState([]);
     const [selectedCity, setSelectedCity] = useState([]);
 
-    const locationURL = "https://turkiyeapi.cyclic.app/api/v1/provinces";
-
-
-    useEffect(() => {
-        axios(locationURL)
-            .then((res) => setData(res.data.data))
-            .catch((error) => {
-                console.error("Error:", error);
-            })
-    }, []);
 
     const handleLocationChange = () => {
         // console.log(data);
@@ -26,6 +17,7 @@ function Weather() {
         setSelectedCity(cityInfo);
         console.log(selectedCity);
     }
+
 
     return (
         <div className="container box">
@@ -44,6 +36,7 @@ function Weather() {
                         </div>
                     </div>
 
+
                     <div className='bg mt-4'>
                         <div className='p-4'>
                             {selectedCity && (
@@ -54,10 +47,7 @@ function Weather() {
                         <div className='row d-flex align-items-center '>
 
                             <div className='col-lg-4 col-sm-4 float-center text-center'>
-                                <img
-                                    alt="Weather Icon"
-                                    className="img-fluid"
-                                />
+                            {/* <img className="img-fluid " src={`https://openweathermap.org/img/wn/${temps.list[0].weather[0].icon.slice(0, 2)}d@4x.png`} alt='current weather icon' /> */}
                             </div>
                             <div className="col-lg-4 col-sm-4">
                                 <h1 className='display-1 fw-bold text-center'>°C</h1>
