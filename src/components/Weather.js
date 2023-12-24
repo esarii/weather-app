@@ -1,32 +1,30 @@
 import { useEffect, useState } from 'react'
+import axios from 'axios';
 
 function Weather() {
 
-    const [location, setLocation] = useState('');
+    const [location, setLocation] = useState(localStorage.getItem("city") || "Adana");
     const [data, setData] = useState([]);
-    const { selectedCity, setSelectedCity } = useState('Muğla');
+    const [selectedCity, setSelectedCity] = useState([]);
+
     const locationURL = "https://turkiyeapi.cyclic.app/api/v1/provinces";
 
+
     useEffect(() => {
-        fetchData();
+        axios(locationURL)
+            .then((res) => setData(res.data.data))
+            .catch((error) => {
+                console.error("Error:", error);
+            })
     }, []);
 
-    const fetchData = async () => {
-        try {
-            const response = await fetch(locationURL);
-            const result = await response.json();
-            setData(result);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-
     const handleLocationChange = () => {
-        console.log(location);
-        const cityInfo = data.find((city) => city.name.toLowerCase() === location.toLowerCase());
+        // console.log(data);
+        const cityInfo = data.find((city) => city.name.toLocaleLowerCase() === location.toLocaleLowerCase());
 
         console.log(cityInfo);
         setSelectedCity(cityInfo);
+        console.log(selectedCity);
     }
 
     return (
@@ -39,18 +37,12 @@ function Weather() {
                             <div className="input-group">
                                 <input type="text" className="form-control" placeholder="Enter location" aria-describedby="button-addon2"
                                     value={location}
-                                    onChange={(e) => setLocation(e.target.value)} />
+                                    onChange={(e) => setLocation(e.target.value) || localStorage.setItem("city", e.target.value)} />
+
                                 <button className="btn btn-info" type="button" id="button-addon2" onClick={handleLocationChange}>Search</button>
                             </div>
                         </div>
                     </div>
-
-                    {data && (
-                        <div>
-                            <h2>Fetched Data:</h2>
-                            <pre>{JSON.stringify(data, null, 2)}</pre>
-                        </div>
-                    )}
 
                     <div className='bg mt-4'>
                         <div className='p-4'>
