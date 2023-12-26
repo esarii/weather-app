@@ -7,9 +7,9 @@ export const CityProvider = ({children}) => {
 
     const [location, setLocation] = useState(localStorage.getItem("city") || "Adana");
     const [data, setData] = useState([]);
+    const [selectedCity, setSelectedCity] =useState([]);
 
     const locationURL = "https://turkiyeapi.cyclic.app/api/v1/provinces";
-
 
     useEffect(() => {
         axios(locationURL)
@@ -23,6 +23,9 @@ export const CityProvider = ({children}) => {
         location,
         setLocation,
         data,
+        setData,
+        selectedCity,
+        setSelectedCity
       };
 
     return (

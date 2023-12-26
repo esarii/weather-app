@@ -6,38 +6,31 @@ const WeatherContext = createContext();
 
 export const WeatherProvider = ({ children }) => {
 
-    const { location  } = useContext(CityContext);
-    const [weatherData, setWeatherData] = useState([]);
+  const { selectedCity } = useContext(CityContext);
+  const [weatherData, setWeatherData] = useState([]);
+
+  const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity.name}&appid=${apiKey}`
+
+  useEffect(() => {
+    axios(apiUrl)
+      .then((res) => {
+        setWeatherData(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [apiUrl, selectedCity]);
 
 
-    const getWeatherData = async (location) => {
-        const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
+  const values = {
+    weatherData,
+  };
 
-        console.log("ezgiii", apiKey);
-      
-        try {
-          const { data } = await axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`
-          );
-          setWeatherData(data);
-        } catch {
-          alert("Hava durumu verileri alınamadı.");
-        }
-      };
-
-      useEffect(() => {
-        location && getWeatherData(location);
-      }, [location]);
-
-
-    const values = {
-        weatherData,
-
-    };
-
-    return (
-        <WeatherContext.Provider value={values}>{children}</WeatherContext.Provider>
-    );
+  return (
+    <WeatherContext.Provider value={values}>{children}</WeatherContext.Provider>
+  );
 }
 
 

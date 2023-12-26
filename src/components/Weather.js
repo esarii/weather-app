@@ -1,23 +1,18 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import CityContext from '../contexts/CityContext'
 import WeatherContext from '../contexts/WeatherContext'
 
 function Weather() {
 
-    const { location, setLocation, data } = useContext(CityContext);
-    const [selectedCity, setSelectedCity] = useState([]);
+    const { location, setLocation, data, selectedCity, setSelectedCity } = useContext(CityContext);
 
     const { weatherData } = useContext(WeatherContext);
-
-    console.log(weatherData);
-
 
     const handleLocationChange = () => {
         const cityInfo = data.find((city) => city.name.toLocaleLowerCase() === location.toLocaleLowerCase());
         setSelectedCity(cityInfo);
         console.log(selectedCity);
     }
-
 
     return (
         <div className="container box">
@@ -40,23 +35,23 @@ function Weather() {
                     <div className='bg mt-4'>
                         <div className='p-4'>
                             {selectedCity && (
-                                <h1 className='text-center'>{selectedCity.name}</h1>
+                                <h1 className='text-center'>{location || selectedCity.name}</h1>
                             )}
                         </div>
 
                         <div className='row d-flex align-items-center '>
 
-                            <div className='col-lg-4 col-sm-4 float-center text-center'>
-                                img
-                            </div>
-                            <div className="col-lg-4 col-sm-4">
-                                <h1 className='display-1 fw-bold text-center'>°C</h1>
-                            </div>
-                            <div className='col-lg-4 col-sm-4 float-start'>
-                                <h6 className='fs-5 fw-light text-center'>description</h6>
-                                <h6 className='fs-6  text-center'><span className='color1'>yağış</span></h6>
-                                <h6 className='fs-6  text-center'><span className='color1'>nem</span></h6>
-                                <h6 className='fs-6  text-center'><span className='color1'>rüzgar</span></h6></div>
+                            <h6 className='fs-5 fw-light text-center'>{weatherData?.id}</h6>
+                            {/* <div className='col-lg-4 col-sm-4 float-center text-center'>
+                                      <img className="img-fluid " src={`https://openweathermap.org/img/wn/${weatherData.weather.icon.slice(0, 2)}d@4x.png`} alt='current weather icon' /></div>
+                                    {/* <div className="col-lg-4 col-sm-4">
+                                      <h1 className='display-1 fw-bold text-center'>{weatherData && Math.round(weatherData.main.temp) + "°"}</h1>
+                                    </div>
+                                    <div className='col-lg-4 col-sm-4 float-start'>
+                                      <h6 className='fs-5 fw-light text-center'>{weatherData.weather.description}</h6>
+                                      <h6 className='fs-6  text-center'><span className='color1'>Hissedilen: </span>{" " + Math.round(weatherData.main.feels_like) + "°"}</h6></div> */}
+
+
 
                         </div>
                     </div>
