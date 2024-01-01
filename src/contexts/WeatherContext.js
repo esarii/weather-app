@@ -7,7 +7,7 @@ const WeatherContext = createContext();
 export const WeatherProvider = ({ children }) => {
 
   const { selectedCity } = useContext(CityContext);
-  const [weatherData, setWeatherData] = useState([]);
+  const [weatherData, setWeatherData] = useState({ weather: [] });
 
   const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity.name}&appid=${apiKey}`
