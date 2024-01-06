@@ -15,3 +15,24 @@ body {
   background-color: #e2e2e2;
   border-radius: 10px;
 }
+
+
+.dark {
+  background-color: #1E1E1E;
+  color: #FFFFFF;
+}
+
+.light{
+  background-color: #F5F5F5;
+  color: #333333;
+}
+
+.lightBox{
+  background-color: #e2e2e2;
+  border-radius: 20px;
+}
+
+.darkBox{
+  background-color: #313131;
+  border-radius: 20px;
+}

@@ -1,9 +1,11 @@
 import { useContext } from 'react'
 import CityContext from '../contexts/CityContext'
 import WeatherContext from '../contexts/WeatherContext'
-
+import ThemeContext from '../contexts/ThemeContext';
 
 function Weather() {
+
+    const { theme, setTheme } = useContext(ThemeContext);
 
     const { location, setLocation, data, selectedCity, setSelectedCity } = useContext(CityContext);
 
@@ -15,9 +17,12 @@ function Weather() {
         console.log(selectedCity);
     }
 
+    const toggleTheme = () => {
+        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
+
     const weatherIcon = weatherData.weather.length > 0 ? weatherData.weather[0].icon.slice(0, 2) : "No weather data";
     const iconToday = `https://openweathermap.org/img/wn/${weatherIcon}d@4x.png`
-
 
     const weatherDescription = weatherData.weather.length > 0 ? weatherData.weather[0].description : "No weather data";
 
@@ -25,11 +30,13 @@ function Weather() {
     const weatherFeelsLike = weatherData.main ? weatherData.main.feels_like : "No weather data";
 
     return (
-        <div className="container box">
+        <div className={`${theme} container box`}>
+
             <div className='row'>
                 <div className='col-lg-6 p-5'>
 
-                    <div className='bg'>
+
+                    <div className={`${theme}Box mt-4`}>
                         <div className='row p-4'>
                             <div className="input-group">
                                 <input type="text" className="form-control" placeholder="Enter location" aria-describedby="button-addon2"
@@ -42,7 +49,7 @@ function Weather() {
                     </div>
 
 
-                    <div className='bg mt-4'>
+                    <div className={`${theme}Box mt-4`}>
                         <div className='p-4'>
                             {selectedCity && (
                                 <h1 className='text-center'>{location || selectedCity.name}</h1>
@@ -71,7 +78,34 @@ function Weather() {
                 <div className='col-lg-6'>
 
                     <div className='col-md-12 px-5 pt-md-5'>
-                        <div className='row bg'>
+
+                        <div className='row my-5 justify-content-center align-items-center'>
+
+                            <div className='col-12 d-flex align-items-center justify-content-end'>
+
+                                <button className='btn btn-secondary' onClick={toggleTheme}>
+                                    {theme === 'light' ? (
+
+                                        <img
+                                            src='/assets/moon.png' // SVG dosyasının gerçek yoluyla değiştirin
+                                            alt='Moon Icon'
+                                            width={24}
+                                            height={24}
+                                        />
+                                    ) : (
+                                        <img
+                                            src='/assets/sunny.png' // SVG dosyasının gerçek yoluyla değiştirin
+                                            alt='Sun Icon'
+                                            width={24}
+                                            height={24}
+                                        />
+                                    )}
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <div className={`${theme}Box mt-4`}>
                             <h3 className='p-4 color1 text-uppercase fs-5 fw-bold text-center'>5 Günlük Hava Tahmini</h3>
                             <div className='row mx-auto d-flex align-items-center justify-content-center'>
                                 <h5 className='color1 col-3 text-start fs-6'>denme</h5>
@@ -81,16 +115,7 @@ function Weather() {
 
                             </div>
                         </div>
-                        <div className='row my-5 justify-content-center align-items-center'>
 
-                            <div className='col-12 d-flex align-items-center justify-content-end'>
-                                <h6 className=' me-3 ms-2 mt-2'>Dark Mode</h6>
-                                <label className="switch">
-                                    <input type="checkbox" id="mode-switch" />
-                                    <span className="slider"></span>
-                                </label>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
