@@ -6,23 +6,19 @@ const WeatherContext = createContext();
 
 export const WeatherProvider = ({ children }) => {
 
-  const { selectedCity } = useContext(CityContext);
+  const { location, selectedCity } = useContext(CityContext);
   const [weatherData, setWeatherData] = useState({ weather: [] });
 
   const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
-  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity.name}&appid=${apiKey}`
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`
+  const fetchData = async () => {
+      const response = await axios.get(apiUrl);
+      setWeatherData(response.data);
+  }
 
   useEffect(() => {
-    axios(apiUrl)
-      .then((res) => {
-        setWeatherData(res.data);
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, [apiUrl, selectedCity]);
-
+    fetchData();
+  }, [selectedCity]);
 
   const values = {
     weatherData,

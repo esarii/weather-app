@@ -11,10 +11,13 @@ function Weather() {
 
     const { weatherData } = useContext(WeatherContext);
     console.log(weatherData);
+
     const handleLocationChange = () => {
+        console.log(location, "location");
+        console.log(data, "data");  
         const cityInfo = data.find((city) => city.name.toLocaleLowerCase() === location.toLocaleLowerCase());
         setSelectedCity(cityInfo);
-        console.log(selectedCity);
+        console.log(selectedCity,"selectedCity");
     }
 
     const toggleTheme = () => {
@@ -28,6 +31,7 @@ function Weather() {
 
     const weatherTemp = weatherData.main ? Math.floor(weatherData.main.temp) : "No weather data";
     const weatherFeelsLike = weatherData.main ? weatherData.main.feels_like : "No weather data";
+
 
     return (
         <div className={`${theme} container box`}>
@@ -52,7 +56,7 @@ function Weather() {
                     <div className={`${theme}Box mt-4`}>
                         <div className='p-4'>
                             {selectedCity && (
-                                <h1 className='text-center'>{location || selectedCity.name}</h1>
+                                <h1 className='text-center'>{selectedCity.name}</h1>
                             )}
                         </div>
 
@@ -85,16 +89,15 @@ function Weather() {
 
                                 <button className='btn btn-secondary' onClick={toggleTheme}>
                                     {theme === 'light' ? (
-
                                         <img
-                                            src='/assets/moon.png' // SVG dosyasının gerçek yoluyla değiştirin
+                                            src='/assets/moon.png'
                                             alt='Moon Icon'
                                             width={24}
                                             height={24}
                                         />
                                     ) : (
                                         <img
-                                            src='/assets/sunny.png' // SVG dosyasının gerçek yoluyla değiştirin
+                                            src='/assets/sunny.png'
                                             alt='Sun Icon'
                                             width={24}
                                             height={24}
@@ -107,13 +110,9 @@ function Weather() {
 
                         <div className={`${theme}Box mt-4`}>
                             <h3 className='p-4 color1 text-uppercase fs-5 fw-bold text-center'>5 Günlük Hava Tahmini</h3>
-                            <div className='row mx-auto d-flex align-items-center justify-content-center'>
-                                <h5 className='color1 col-3 text-start fs-6'>denme</h5>
-                                <div className="col-3"><img alt='weather icon' /></div>
-                                <h6 className='color1 col-3 ps-4 text-start fs-6 fw-light'>ddd</h6>
-                                <h4 className='col-3 fw-bold'> "°"</h4>
 
-                            </div>
+                            <div>deneme</div>
+
                         </div>
 
                     </div>
